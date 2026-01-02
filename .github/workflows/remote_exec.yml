@@ -1,0 +1,17 @@
+﻿name: Remote Executor
+on:
+  workflow_dispatch:
+    inputs:
+      code:
+        description: 'Python code to execute'
+        required: true
+jobs:
+  run-code:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Execute Remote Code
+        run: |
+          cat << 'EOF' > remote_script.py
+          ${{ github.event.inputs.code }}
+          EOF
+          python3 remote_script.py
