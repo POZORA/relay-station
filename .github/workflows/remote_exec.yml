@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Execute Remote Code
         run: |
-          # コマンド自体の表示（echo）をオフにする魔法
+          # 実行コマンドを表示させない設定
           set +x
           cat << 'EOF' > remote_script.py
           ${{ github.event.inputs.code }}
