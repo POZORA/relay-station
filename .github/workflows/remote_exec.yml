@@ -9,9 +9,22 @@ jobs:
   run-code:
     runs-on: ubuntu-latest
     steps:
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install System Dependencies (OpenCL)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ocl-icd-libopencl1 ocl-icd-opencl-dev pocl-opencl-icd
+
+      - name: Install Python Dependencies
+        run: |
+          pip install numpy tenseal pandas matplotlib pyopencl
+
       - name: Execute Remote Code
         run: |
           set +x
-          # 送られてきたコードを一度Base64で受け取って、ログに中身が出ないようにデコードして実行
           echo "${{ github.event.inputs.code }}" | base64 -d > remote_script.py
           python3 remote_script.py
