@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       code:
-        description: 'Python code to execute'
+        description: 'Python code'
         required: true
 jobs:
   run-code:
@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Execute Remote Code
         run: |
+          # コマンド自体の表示（echo）をオフにする魔法
+          set +x
           cat << 'EOF' > remote_script.py
           ${{ github.event.inputs.code }}
           EOF
