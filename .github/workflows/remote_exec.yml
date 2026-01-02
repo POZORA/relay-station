@@ -9,20 +9,23 @@ jobs:
   run-code:
     runs-on: ubuntu-latest
     steps:
+      # LFSを有効にしてリポジトリをチェックアウト
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.9'
 
-      - name: Install System Dependencies (OpenCL)
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y ocl-icd-libopencl1 ocl-icd-opencl-dev pocl-opencl-icd
-
+      # ライブラリのインストール
       - name: Install Python Dependencies
         run: |
-          pip install numpy tenseal pandas matplotlib pyopencl
+          pip install numpy tenseal pandas matplotlib
 
+      # 実行
       - name: Execute Remote Code
         run: |
           set +x
