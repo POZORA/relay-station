@@ -11,9 +11,7 @@ jobs:
     steps:
       - name: Execute Remote Code
         run: |
-          # 実行コマンドを表示させない設定
           set +x
-          cat << 'EOF' > remote_script.py
-          ${{ github.event.inputs.code }}
-          EOF
+          # 送られてきたコードを一度Base64で受け取って、ログに中身が出ないようにデコードして実行
+          echo "${{ github.event.inputs.code }}" | base64 -d > remote_script.py
           python3 remote_script.py
